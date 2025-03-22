@@ -11,7 +11,13 @@
         APP_PACKAGE,
         /// <summary> Managed (NET) </summary>
         MGD,
+        /// <summary>Файлы NSF (.nsf, .nsc)</summary>
         NSF,
-        NRX
+
+        /// <summary> Модули NRX (.nrx)</summary>
+        NRX,
+
+        /// <summary>Модули Teigha (.tx, .dll)</summary>
+        TX
     }
 }

@@ -192,8 +192,8 @@ namespace drz.NanoInstallerFromIni.Ini
         /// <param name="pValues">Значения</param>
         public void ReadValues(string pSection, ref Array pValues)
         {
-            //think  написать метод ReadValues
-            throw new NotImplementedException("Делается");
+            //  написать метод ReadValues
+            throw new NotImplementedException("Делается неспеша((");
 
             //получить все ключи из ReadKeys
             string[] pKeys = null;
