@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Example\**" />
+    <EmbeddedResource Remove="Example\**" />
+    <None Remove="Example\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\GitHubMy\KpblcNCadCfgIni\KpblcNCadCfgIni\KpblcNCadCfgIni.csproj">
       <Private>True</Private>
     </ProjectReference>

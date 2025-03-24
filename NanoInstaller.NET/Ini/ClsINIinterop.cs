@@ -192,7 +192,7 @@ namespace drz.NanoInstallerFromIni.Ini
         /// <param name="pValues">Значения</param>
         public void ReadValues(string pSection, ref Array pValues)
         {
-            //  написать метод ReadValues
+            //x  написать метод ReadValues
             throw new NotImplementedException("Делается неспеша((");
 
             //получить все ключи из ReadKeys
@@ -210,10 +210,18 @@ namespace drz.NanoInstallerFromIni.Ini
         }
         #endregion
 
+        /// <summary>
+        /// Writes the section.
+        /// </summary>
+        /// <param name="pSection">The p section.</param>
         public void WriteSection(string pSection)
         {
-            WriteValue(pSection, "", "");
-            RemoveValue(pSection, "");
+            WritePrivateProfileString(pSection, "", "", ls_IniFilename);//add section and key =val
+            WritePrivateProfileString(pSection, "", null, ls_IniFilename);//remove key=val
+
+            //WritePrivateProfileString(pSection, "", null, ls_IniFilename);
+            //WriteValue(pSection, "", "");
+            //RemoveValue(pSection, "");
         }
 
 
@@ -236,7 +244,11 @@ namespace drz.NanoInstallerFromIni.Ini
 
         #region ReadKeys
 
-
+        /// <summary>
+        /// Reads the keys.
+        /// </summary>
+        /// <param name="pSection">The p section.</param>
+        /// <returns></returns>
         public List<string> ReadKeys(string pSection)
         {
             string _pKeys = z_GetString(pSection, null, null);
@@ -275,6 +287,10 @@ namespace drz.NanoInstallerFromIni.Ini
 
         #region ReadSections
 
+        /// <summary>
+        /// Reads the sections.
+        /// </summary>
+        /// <returns></returns>
         public List<string> ReadSections()
         {
             //   razygraevaa on 07.02.2022 at 12:44
@@ -309,7 +325,7 @@ namespace drz.NanoInstallerFromIni.Ini
 
         /// <summary> Считывание разделов из INI File</summary>
         /// <param name="pSections">Возврат массива разделов</param>
-        public List<AddonInfo> ReadSections(string SectionPattern, string valuePattern)
+        public List<AddonInfo> ReadSections(string SectionPattern, string valuePattern)//x прибить
         {
             List<AddonInfo> addonInfoList = new List<AddonInfo>();
 
@@ -338,11 +354,7 @@ namespace drz.NanoInstallerFromIni.Ini
 
                         addonInfoList.Add(addonInfo);
                     }
-
                 }
-
-
-
                 return addonInfoList;
                 //return new List<string>(selectedSections);
             }
@@ -359,6 +371,20 @@ namespace drz.NanoInstallerFromIni.Ini
         public void RemoveSection(string pSection)
         {
             WritePrivateProfileString(pSection, null, null, ls_IniFilename);
+        }
+
+        /// <summary>
+        /// Removes the sections.
+        /// </summary>
+        public void RemoveSections()
+        {
+            List<string> sections = ReadSections();
+            foreach (string section in sections)
+            {
+                WritePrivateProfileString(section, null, null, ls_IniFilename);
+
+            }
+
         }
 
         /// <summary> Вызов API GetPrivateProfileString / GetPrivateProfileStruct </summary>
