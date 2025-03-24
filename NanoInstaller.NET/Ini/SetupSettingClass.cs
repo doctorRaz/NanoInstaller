@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using drz.NanoInstallerFromIni.Enum;
+using drz.NanoInstallerFromIni.Instances;
+
+using static drz.NanoInstallerFromIni.Instances.InstanceAppCfg;
+
 namespace drz.NanoInstallerFromIni.Ini
 {
     #region SetupSettings
@@ -29,16 +34,16 @@ namespace drz.NanoInstallerFromIni.Ini
     {
         internal AppSet()
         {
-            Addons = new List<Addon>();
+            AddonCfgs = new List<AddonCfg>();
         }
 
         /// <summary>
-        /// Gets or sets the path CFG inis.
+        /// Gets or sets the cfg App nano.
         /// </summary>
         /// <value>
         /// The path CFG inis.
         /// </value>
-        internal string NanoCfgPath { get; set; }
+        internal AppCfg AppCfg { get; set; }
 
         /// <summary>
         /// Gets or sets the addon paths.
@@ -46,7 +51,7 @@ namespace drz.NanoInstallerFromIni.Ini
         /// <value>
         /// The addon paths.
         /// </value>
-        internal List<Addon> Addons { get; set; }
+        internal List<AddonCfg> AddonCfgs { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is added addon.
@@ -57,15 +62,18 @@ namespace drz.NanoInstallerFromIni.Ini
         internal bool IsAdd { get; set; }
     }
 
-    internal class Addon
-    {
-        internal string Name { get; set; }
+    //internal class AddonCfg
+    //{
+    //    internal string Name { get; set; }
 
-        internal bool IsAdd { get; set; }
+    //    internal bool IsAdd { get; set; }
 
-        internal string AddonPath { get; set; }
+    //    internal string AddonPath { get; set; }
 
-    }
+    //    string addonExt { get; set; }
+
+    //     AppTypeEnum appTypeEnum { get; set; }
+    //}
 
     #endregion
 }

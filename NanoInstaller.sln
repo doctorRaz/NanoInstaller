@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NanoInstaller.NET", "NanoIn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KpblcNCadCfgIni", "..\GitHubMy\KpblcNCadCfgIni\KpblcNCadCfgIni\KpblcNCadCfgIni.csproj", "{37183EBF-9FE4-433D-AA91-B4B406F5A9A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NanoInstaller", "NanoInstaller\NanoInstaller.csproj", "{FB7047DF-4313-4C07-B6EC-D6BFE2AAFC4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NanoInstaller.NET2.0", "NanoInstaller.NET2.0\NanoInstaller.NET2.0.csproj", "{9A1F1DD4-3DB4-4403-8AC5-955CE8B220AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{37183EBF-9FE4-433D-AA91-B4B406F5A9A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37183EBF-9FE4-433D-AA91-B4B406F5A9A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37183EBF-9FE4-433D-AA91-B4B406F5A9A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB7047DF-4313-4C07-B6EC-D6BFE2AAFC4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB7047DF-4313-4C07-B6EC-D6BFE2AAFC4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB7047DF-4313-4C07-B6EC-D6BFE2AAFC4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB7047DF-4313-4C07-B6EC-D6BFE2AAFC4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A1F1DD4-3DB4-4403-8AC5-955CE8B220AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A1F1DD4-3DB4-4403-8AC5-955CE8B220AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A1F1DD4-3DB4-4403-8AC5-955CE8B220AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A1F1DD4-3DB4-4403-8AC5-955CE8B220AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

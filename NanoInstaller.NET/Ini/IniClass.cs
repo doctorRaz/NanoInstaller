@@ -153,6 +153,13 @@ namespace drz.NanoInstallerFromIni.Ini
         }
 
         bool _isSectionApp;
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is section application.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is section application; otherwise, <c>false</c>.
+        /// </value>
         public bool IsSectionApp
         {
             get
@@ -161,7 +168,6 @@ namespace drz.NanoInstallerFromIni.Ini
                 return _isSectionApp;
             }
         }
-
 
         /// <summary>
         /// Gets or sets the keys.
@@ -173,13 +179,16 @@ namespace drz.NanoInstallerFromIni.Ini
 
 
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public class IniKey
     {
         public string ModuleName { get; set; }
         public string Section { get; set; }
         public string KeyName { get; set; }
         public string KeyValue { get; set; }
-        //public List<IniValues> Values { get; set; }
     }
 
     //public class IniValues

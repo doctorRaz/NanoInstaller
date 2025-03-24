@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 using drz.NanoInstallerFromIni.Enum;
+using drz.NanoInstallerFromIni.Instances;
 
 namespace drz.NanoInstallerFromIni.Ini
 {
@@ -15,15 +17,121 @@ namespace drz.NanoInstallerFromIni.Ini
             setset = _setset;
         }
 
-        IniApp iniAllModules { get; set; }
+        IniApp _iniAllModules;
+        public IniApp IniAllModules
+        {
+            get
+            {
+                ClsIni clsIni = new ClsIni(pathCfg);
 
-        static string sectionPatternStart = @"\Configuration\";
+                _iniAllModules = new IniApp();//? module spds def mech
 
-        static string sectionPatternEnd = @"\Appload\Startup\app";
+                IniModule iniAppsSpds = new IniModule() { ModuleName = "SPDS" };
+
+                IniModule iniAppsMex = new IniModule() { ModuleName = "Mech" };
+
+                IniModule iniAppsDef = new IniModule() { ModuleName = "<<Default>>" };
+
+                IniModule iniAppsUnknown = new IniModule() { ModuleName = "Unknown" };
+
+
+                _iniAllModules.Modules.Add(iniAppsUnknown);
+                _iniAllModules.Modules.Add(iniAppsSpds);
+                _iniAllModules.Modules.Add(iniAppsMex);
+                _iniAllModules.Modules.Add(iniAppsDef);
+
+                List<string> sections = clsIni.ReadSections();//get All sections
+
+                //get INi
+                foreach (string section in sections)
+                {
+                    //where p.Contains(sectionPatternEnd, StringComparison.InvariantCultureIgnoreCase)
+
+                    IniSection iniSections = new IniSection();
+
+                    iniSections.RealName = section;
+
+                    List<string> keys = clsIni.ReadKeys(section);
+
+                    foreach (string key in keys)
+                    {
+                        IniKey iniKeys = new IniKey();
+
+                        iniKeys.KeyName = key;
+                        iniKeys.Section = section;
+                        iniKeys.ModuleName = iniSections.ModuleName;
+                        iniKeys.KeyValue = clsIni.ReadValue(section, key, "");
+
+                        iniSections.Keys.Add(iniKeys);
+                    }
+
+                    switch (iniSections.ModuleName)
+                    {
+                        case "Unknown":
+                            iniAppsUnknown.Sections.Add(iniSections);
+                            break;
+                        case "SPDS":
+                            iniAppsSpds.Sections.Add(iniSections);
+                            break;
+                        case "Mech":
+                            iniAppsMex.Sections.Add(iniSections);
+                            break;
+                        case "<<Default>>":
+                            iniAppsDef.Sections.Add(iniSections);
+                            break;
+                        default:
+                            iniAppsUnknown.Sections.Add(iniSections);
+                            break;
+                    }
+                }
+                return _iniAllModules;
+            }
+            set
+            {
+                _iniAllModules = value;
+
+#if DEBUG
+                ClsIni clsIni = new ClsIni(pathCfg + ".bak");
+#else
+                ClsIni clsIni = new ClsIni(pathCfg);
+#endif
+
+                int iniSections = 0;
+
+                foreach (IniModule mod in _iniAllModules.Modules)
+                {
+                    foreach (IniSection sec in mod.Sections)
+                    {
+                        if (sec.IsSectionApp)
+                        {
+                            Console.WriteLine($"{sec.Name}");
+                            if (sec.Keys.Count > 0)
+                            {
+                                foreach (IniKey key in sec.Keys)
+                                {
+                                    Console.WriteLine($"{key.KeyName}={key.KeyValue}");
+                                }
+                            }
+                            else
+                            {
+
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+        }
+
+        static readonly string sectionPatternStart = @"\Configuration\";
+
+        static readonly string sectionPatternEnd = @"\Appload\Startup\app";
         /// <summary>
         /// наномодули
         /// </summary>
-        static string[] modules = { "SPDS", "<<Default>>", "Mech" };
+        static string[] modules = { "SPDS", "<<Default>>", "Mech" };//todo Enum
 
         /// <summary>
         /// путь к наноконфигу
@@ -31,7 +139,12 @@ namespace drz.NanoInstallerFromIni.Ini
         /// <value>
         /// The path CFG ini.
         /// </value>
-        string pathCfgIni { get; set; }
+        internal string pathCfg { get; set; }
+
+        /// <summary>
+        ////путь к файлу аддона
+        /// </summary>
+        internal string AddonPath { get; set; }
 
         /// <summary>
         /// полный путь к аддону
@@ -39,7 +152,7 @@ namespace drz.NanoInstallerFromIni.Ini
         /// <value>
         /// The addon paths.
         /// </value>
-        List<Addon> addonPaths { get; set; }
+        List<AddonCfg> addonCfgs { get; set; }
 
         SetupSet setset { get; set; }
 
@@ -53,15 +166,15 @@ namespace drz.NanoInstallerFromIni.Ini
         {
             get
             {
-                string extension = Path.GetExtension(pathCfgIni);
+                string extension = Path.GetExtension(AddonPath);
                 return ConvertType.AddonType(extension).ToString();
             }
         }
         //"APP_PACKAGE";//todo real val
 
-        bool isAddAdon { get; set; }
+        bool isAdd { get; set; }
 
-       
+
 
         /// <summary>
         /// Installs this instance.
@@ -73,84 +186,34 @@ namespace drz.NanoInstallerFromIni.Ini
 
             foreach (var nano in setset.AppSets)
             {
-                pathCfgIni = nano.NanoCfgPath;
+                pathCfg = nano.AppCfg.CfgPath;
 
-                addonPaths = nano.Addons;
+                addonCfgs = nano.AddonCfgs;
 
-                isAddAdon = nano.IsAdd;
+                isAdd = nano.IsAdd;
 
-                if (!GetIni()) isOk = false;//если хоть один сбой то не ОК
+                //? if (!GetIni()) isOk = false;//если хоть один сбой то не ОК
             }
 
             return isOk;
         }
 
-        internal bool GetIni()//? IniApp iniAllModules вынести в свойство
+        internal void AddAddonByName()
         {
+            throw new NotImplementedException("Worked");
+            /********************************************************************************************************
 
-            //string pathCfgIni = "";// setset.CfgIniPaths[0];//todo add for
+             if ADD
+             проверить все ли модули есть
 
-            ClsIni clsIni = new ClsIni(pathCfgIni);
-            //clsIni.WriteSection("ааа");
+             [\Configuration\SPDS\Appload]	
+             [\Configuration\SPDS\Appload\Startup]	
 
-            IniModule iniAppsSpds = new IniModule() { ModuleName = "SPDS" };
+ ****************************/
 
-            IniModule iniAppsMex = new IniModule() { ModuleName = "Mech" };
-
-            IniModule iniAppsDef = new IniModule() { ModuleName = "<<Default>>" };
-
-            IniModule iniAppsUnknown = new IniModule() { ModuleName = "Unknown" };
-
-            iniAllModules = new IniApp();//? module spds def mech
-
-            iniAllModules.Modules.Add(iniAppsUnknown);
-            iniAllModules.Modules.Add(iniAppsSpds);
-            iniAllModules.Modules.Add(iniAppsMex);
-            iniAllModules.Modules.Add(iniAppsDef);
-
-            List<string> sections = clsIni.ReadSections();//read All sections
-
-
-            //get INi
-            foreach (string section in sections)
-            {
-                //where p.Contains(sectionPatternEnd, StringComparison.InvariantCultureIgnoreCase)
-
-                IniSection iniSections = new IniSection();
-
-                iniSections.RealName = section;
-
-                List<string> keys = clsIni.ReadKeys(section);
-
-                foreach (string key in keys)
-                {
-                    IniKey iniKeys = new IniKey();
-
-                    iniKeys.KeyName = key;
-                    iniKeys.Section = section;
-                    iniKeys.ModuleName = iniSections.ModuleName;
-                    iniKeys.KeyValue = clsIni.ReadValue(section, key, "");
-
-                    iniSections.Keys.Add(iniKeys);
-                }
-
-                iniAppsSpds.Sections.Add(iniSections);//? заглушка модули по условию
-            }
-
-
-
-            Console.WriteLine("*************");
-            /*****************************
-            if ADD
-            проверить все ли модули есть
-
-            [\Configuration\SPDS\Appload]	
-            [\Configuration\SPDS\Appload\Startup]	
-
-            ****************************/
-
+            /********************************************************************************************************
             //if remove
-
+            var iniAppsSpds = IniAllModules;
 
             foreach (IniSection section in iniAppsSpds.Sections)//? заглушка
             {
@@ -167,11 +230,11 @@ namespace drz.NanoInstallerFromIni.Ini
                 {
                 }
             }
-            /*
-            //todo compare String.Equals(loader, valuePattern,StringComparison.InvariantCultureIgnoreCase)
+
+            compare String.Equals(loader, valuePattern, StringComparison.InvariantCultureIgnoreCase)
             if (key == "Loader" && iniKeys.KeyValue == pathAddRemoveAddon)// exist addon
             {
-                if (isAddAdon)// add 
+                if (isAdd)// add 
                 {
 
                 }
@@ -185,7 +248,7 @@ namespace drz.NanoInstallerFromIni.Ini
             {
 
             }
-            */
+
 
 
             IniApp iniNanos = new IniApp();
@@ -201,36 +264,42 @@ namespace drz.NanoInstallerFromIni.Ini
             }
 
 
-
-            return true;
-
+            ********************************************************************************************************/
 
 
 
         }
 
-
-
-
-        internal bool AddAddon()
+        internal void AddAddonByFullName()
         {
-            return false;
+            throw new NotImplementedException("Worked");
         }
-        internal bool RemoveAddon()
+
+        /// <summary>
+        /// Удаление аддона по имени
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        internal void RemoveAddonByName()
         {
-            return false;
+            throw new NotImplementedException("Worked");
         }
 
-
-
+        /// <summary>
+        /// удаление имени по полному пути 
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        internal void RemoveAddonByFullName()
+        {
+            throw new NotImplementedException("Worked");
+        }
 
 
     }
 
 
 
-  
 
-  
+
+
 
 }

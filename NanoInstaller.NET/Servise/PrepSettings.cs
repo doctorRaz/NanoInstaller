@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 using drz.NanoInstallerFromIni.Ini;
+using drz.NanoInstallerFromIni.Instances;
 
-using static drz.NanoInstallerFromIni.Instances.InstanceNano;
+using static drz.NanoInstallerFromIni.Instances.InstanceAppCfg;
 
 namespace drz.NanoInstallerFromIni.Servise
 {
@@ -16,20 +17,20 @@ namespace drz.NanoInstallerFromIni.Servise
     internal class PrepSettings
     {
 
-        internal PrepSettings(List<nanoCfg> _nanoCfgPaths, List<string> _addonPaths, bool _isAdd)
+        internal PrepSettings(List<AppCfg> _appCfg, List<AddonCfg> _addonCfg, bool _isAdd)
         {
-            nanoCfgPaths = _nanoCfgPaths;
+            appCfgs = _appCfg;
 
-            addonPaths = _addonPaths;
+            addonCfg = _addonCfg;
 
             isAdd = _isAdd;
         }
 
-        List<string> addonPaths;
+        List<AddonCfg> addonCfg { get; set; }
 
         bool isAdd;
 
-        List<nanoCfg> nanoCfgPaths { get; set; }
+        List<AppCfg> appCfgs { get; set; }
 
 
         SetupSet _setupSets;
@@ -45,27 +46,29 @@ namespace drz.NanoInstallerFromIni.Servise
             get
             {
                 //all setup
-                  _setupSets = new SetupSet();
+                _setupSets = new SetupSet();
                 _setupSets.IsAdd = isAdd;
-                foreach (var nanoCfgPath in nanoCfgPaths)
+                foreach (AppCfg appCfg in appCfgs)
                 {
                     AppSet appSet = new AppSet();
-                    appSet.NanoCfgPath = nanoCfgPath.CfgPath;
-
-                    foreach (string addonPath in addonPaths)
-                    {
-                        Addon addon = new Addon()
-                        {
-                            AddonPath = addonPath,
-                            IsAdd = isAdd,
-                            Name = Path.GetFileNameWithoutExtension(addonPath)
-                        };
-                        appSet.Addons.Add(addon);
-
-                    }
+                    appSet.AppCfg = appCfg;
+                    appSet.AddonCfgs = addonCfg;
                     appSet.IsAdd = isAdd;
-                    _setupSets.AppSets.Add(appSet);
 
+
+                    //foreach (string addonPath in addonCfg)
+                    //{
+                    //    Addon addon = new Addon()
+                    //    {
+                    //        AddonPath = addonPath,
+                    //        IsAdd = isAdd,
+                    //        Name = Path.GetFileNameWithoutExtension(addonPath)
+                    //    };
+                    //    appSet.AddonCfgs.Add(addon);
+
+                    //}
+
+                    _setupSets.AppSets.Add(appSet);
                 }
 
                 return _setupSets;

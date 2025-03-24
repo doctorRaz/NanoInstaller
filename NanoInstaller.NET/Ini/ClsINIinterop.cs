@@ -33,6 +33,8 @@ EULA:
 ==============================================================================================================*/
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -325,45 +327,45 @@ namespace drz.NanoInstallerFromIni.Ini
 
         /// <summary> Считывание разделов из INI File</summary>
         /// <param name="pSections">Возврат массива разделов</param>
-        public List<AddonInfo> ReadSections(string SectionPattern, string valuePattern)//x прибить
-        {
-            List<AddonInfo> addonInfoList = new List<AddonInfo>();
+        //public List<AddonInfo> ReadSections(string SectionPattern, string valuePattern)//x прибить
+        //{
+        //    List<AddonInfo> addonInfoList = new List<AddonInfo>();
 
-            //   razygraevaa on 07.02.2022 at 12:44
-            string _pSections = z_GetString(null, null, null);
-            if (!string.IsNullOrWhiteSpace(_pSections))
-            {
+        //    //   razygraevaa on 07.02.2022 at 12:44
+        //    string _pSections = z_GetString(null, null, null);
+        //    if (!string.IsNullOrWhiteSpace(_pSections))
+        //    {
 
-                List<string> pSections = new List<string>(_pSections.Split((char)0));
+        //        List<string> pSections = new List<string>(_pSections.Split((char)0));
 
-                var selectedSections = from p in pSections
-                                           //where p.Length == 3
-                                       where p.Contains(SectionPattern, StringComparison.InvariantCultureIgnoreCase)
-                                       select p;
-                foreach (string? selectedSection in selectedSections)
-                {
-                    AddonInfo addonInfo = new AddonInfo();
+        //        var selectedSections = from p in pSections
+        //                                   //where p.Length == 3
+        //                               where p.Contains(SectionPattern, StringComparison.InvariantCultureIgnoreCase)
+        //                               select p;
+        //        foreach (string selectedSection in selectedSections)
+        //        {
+        //            AddonInfo addonInfo = new AddonInfo();
 
-                    string loader = ReadValue(selectedSection, "Loader");
-                    if (string.Equals(loader, valuePattern, StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        addonInfo.Loader = loader;
-                        addonInfo.Enabled = ReadValue(selectedSection, "Enabled");
-                        addonInfo.Type = ReadValue(selectedSection, "Type");
-                        addonInfo.Section = selectedSection;
+        //            string loader = ReadValue(selectedSection, "Loader");
+        //            if (string.Equals(loader, valuePattern, StringComparison.InvariantCultureIgnoreCase))
+        //            {
+        //                addonInfo.Loader = loader;
+        //                addonInfo.Enabled = ReadValue(selectedSection, "Enabled");
+        //                addonInfo.Type = ReadValue(selectedSection, "Type");
+        //                addonInfo.Section = selectedSection;
 
-                        addonInfoList.Add(addonInfo);
-                    }
-                }
-                return addonInfoList;
-                //return new List<string>(selectedSections);
-            }
-            else
-            {
-                return addonInfoList;
-            }
-            //pSections = z_GetString(null, null, null).Split((char)0);// by razygraevaa on 07.02.2022 at 12:44
-        }
+        //                addonInfoList.Add(addonInfo);
+        //            }
+        //        }
+        //        return addonInfoList;
+        //        //return new List<string>(selectedSections);
+        //    }
+        //    else
+        //    {
+        //        return addonInfoList;
+        //    }
+        //    //pSections = z_GetString(null, null, null).Split((char)0);// by razygraevaa on 07.02.2022 at 12:44
+        //}
         #endregion
 
         /// <summary>Удалить раздел из INI File</summary>

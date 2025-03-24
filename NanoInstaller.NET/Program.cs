@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -10,7 +11,7 @@ using drz.NanoInstallerFromIni.Servise;
 
 using Microsoft.Win32;
 
-using static drz.NanoInstallerFromIni.Instances.InstanceNano;
+using static drz.NanoInstallerFromIni.Instances.InstanceAppCfg;
 
 namespace drz.NanoInstallerFromIni
 {
@@ -46,38 +47,67 @@ namespace drz.NanoInstallerFromIni
 
             rr = clsIni.ReadSections();
 
-            List<string> list = new List<string>()
-            {
-                "Tom",
-                "Bob",
-                "uk"
-            };
-
-            list.Remove("Tom");
-
-
 
             //***
-            bool isAdd = true;
-            bool isDotNet = true;
+            bool isAdd = true;//добавлять
+            bool isDotNet = true;//только для NET
 
-            //получим пути к нано, пофих стоит он или нет, конфиг существует значит ставим или сносим аддон в конфиге
-            InstanceNano instanseNano = new InstanceNano(isDotNet);
+            //получим пути к нано, пофих стоит он или нет, конфиг существует значит ставим или сносим аддон в конфиге, хуже не будет точно
+            InstanceAppCfg instanseAppCfg = new InstanceAppCfg(isDotNet);
 
-            List<nanoCfg> nanoCfgs = instanseNano.nanoCfgs;
+            //все аддоны из каталога
+            string addonDir = @"d:\@Developers\В работе\!Текущее\Programmers\!NET\!bundle\";
+            InstanceAddonCfg instanseAddonCfg = new InstanceAddonCfg(addonDir, AppTypeEnum.APP_PACKAGE);
 
-            foreach (nanoCfg n in nanoCfgs)
+            //собираем в кучу список аддонов под конфиги, тут потом должен быть GUI
+            PrepSettings prepSettings = new PrepSettings(instanseAppCfg.AppCfgs, instanseAddonCfg.AddonCfgs, isAdd);
+            SetupSet set = prepSettings.SetupSets;
+
+
+            NanoInstaller nanoInstaller = new NanoInstaller(prepSettings.SetupSets);
+
+            //test get INI
+            nanoInstaller.pathCfg = @"d:\@Developers\В работе\!Текущее\Programmers\!NET\NanoInstaller\@res\cfg.ini";// instanseAppCfg.AppCfgs[0].CfgPath;
+            IniApp getini = nanoInstaller.IniAllModules;
+
+#if DEBUG
+
+
+            foreach (var mod in getini.Modules)
             {
-                Console.WriteLine($"{n.CfgName}\t {n.CfgPath}");
+                int iniSec = 0;
+                string secName = string.Empty;
+                foreach (var sec in mod.Sections)
+                {
+                    if (sec.IsSectionApp)
+                    {
+                        secName = sec.Name + iniSec;
+                        iniSec++;
+                    }
+                    else
+                    {
+                        secName = sec.RealName;
+                    }
+
+                    Console.WriteLine($"{secName}");
+                    if (sec.Keys.Count > 0)
+                    {
+                        foreach (var key in sec.Keys)
+                        {
+                            Console.WriteLine($"{key.KeyName}={key.KeyValue}");
+                        }
+                    }
+
+                }
 
             }
+
+            nanoInstaller.IniAllModules = getini;
+#endif
             Console.WriteLine("*************************");
-            string addonDir = @"d:\@Developers\В работе\!Текущее\Programmers\!NET\!bundle\";
-            InstanceAddon instanseAddon = new InstanceAddon(addonDir, AppTypeEnum.APP_PACKAGE);
 
 
 
-            PrepSettings prepSettings = new PrepSettings(instanseNano.nanoCfgs, instanseAddon.AddonPaths, isAdd);
             /********************************************************************************************************
             получить  наноконфиги
             получить пакеты или аддоны
@@ -87,7 +117,6 @@ namespace drz.NanoInstallerFromIni
 
 
 
-            NanoInstaller nanoInstaller = new NanoInstaller(prepSettings.SetupSets);
             nanoInstaller.Install();//пошли работать
 
 

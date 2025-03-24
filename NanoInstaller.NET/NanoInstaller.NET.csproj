@@ -14,10 +14,4 @@
     <None Remove="Example\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\GitHubMy\KpblcNCadCfgIni\KpblcNCadCfgIni\KpblcNCadCfgIni.csproj">
-      <Private>True</Private>
-    </ProjectReference>
-  </ItemGroup>
-
 </Project>
