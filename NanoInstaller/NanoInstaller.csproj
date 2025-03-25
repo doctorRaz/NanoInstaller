@@ -71,8 +71,8 @@
     <Compile Include="..\NanoInstaller.NET\Program.cs">
       <Link>Program.cs</Link>
     </Compile>
-    <Compile Include="..\NanoInstaller.NET\Servise\PrepSettings.cs">
-      <Link>Servise\PrepSettings.cs</Link>
+    <Compile Include="..\NanoInstaller.NET\Service\PrepSettings.cs">
+      <Link>Service\PrepSettings.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
