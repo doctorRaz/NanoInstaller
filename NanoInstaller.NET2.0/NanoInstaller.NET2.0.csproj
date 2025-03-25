@@ -5,34 +5,34 @@
     <RootNamespace>NanoInstaller.NET2._0</RootNamespace>
   </PropertyGroup>
 <ItemGroup>
-    <Compile Include="..\NanoInstaller.NET\Enum\AppTypeEnum.cs">
+    <Compile Include="..\src\Enum\AppTypeEnum.cs">
       <Link>Enum\AppTypeEnum.cs</Link>
     </Compile>
-    <Compile Include="..\NanoInstaller.NET\Ini\ClsINIinterop.cs">
+    <Compile Include="..\src\Ini\ClsINIinterop.cs">
       <Link>Ini\ClsINIinterop.cs</Link>
     </Compile>
-    <Compile Include="..\NanoInstaller.NET\Ini\IniClass.cs">
+    <Compile Include="..\src\Ini\IniClass.cs">
       <Link>Ini\IniClass.cs</Link>
     </Compile>
-    <Compile Include="..\NanoInstaller.NET\Ini\NanoInstaller.cs">
+    <Compile Include="..\src\Ini\NanoInstaller.cs">
       <Link>Ini\NanoInstaller.cs</Link>
     </Compile>
-    <Compile Include="..\NanoInstaller.NET\Ini\SetupSettingClass.cs">
+    <Compile Include="..\src\Ini\SetupSettingClass.cs">
       <Link>Ini\SetupSettingClass.cs</Link>
     </Compile>
-    <Compile Include="..\NanoInstaller.NET\Instances\InstanceAddonCfg.cs">
+    <Compile Include="..\src\Instances\InstanceAddonCfg.cs">
       <Link>Instances\InstanceAddonCfg.cs</Link>
     </Compile>
-    <Compile Include="..\NanoInstaller.NET\Instances\InstanceAppCfg.cs">
+    <Compile Include="..\src\Instances\InstanceAppCfg.cs">
       <Link>Instances\InstanceAppCfg.cs</Link>
     </Compile>
-    <Compile Include="..\NanoInstaller.NET\package\packageCfg.cs">
+    <Compile Include="..\src\package\packageCfg.cs">
       <Link>package\packageCfg.cs</Link>
     </Compile>
-    <Compile Include="..\NanoInstaller.NET\Program.cs">
+    <Compile Include="..\src\Program.cs">
       <Link>Program.cs</Link>
     </Compile>
-    <Compile Include="..\NanoInstaller.NET\Service\PrepSettings.cs">
+    <Compile Include="..\src\Service\PrepSettings.cs">
       <Link>Service\PrepSettings.cs</Link>
     </Compile>
     

@@ -8,10 +8,38 @@
     <RootNamespace>drz.NanoInstallerFromIni</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Example\**" />
-    <EmbeddedResource Remove="Example\**" />
-    <None Remove="Example\**" />
+ <ItemGroup>
+    <Compile Include="..\src\Enum\AppTypeEnum.cs">
+      <Link>Enum\AppTypeEnum.cs</Link>
+    </Compile>
+    <Compile Include="..\src\Ini\ClsINIinterop.cs">
+      <Link>Ini\ClsINIinterop.cs</Link>
+    </Compile>
+    <Compile Include="..\src\Ini\IniClass.cs">
+      <Link>Ini\IniClass.cs</Link>
+    </Compile>
+    <Compile Include="..\src\Ini\NanoInstaller.cs">
+      <Link>Ini\NanoInstaller.cs</Link>
+    </Compile>
+    <Compile Include="..\src\Ini\SetupSettingClass.cs">
+      <Link>Ini\SetupSettingClass.cs</Link>
+    </Compile>
+    <Compile Include="..\src\Instances\InstanceAddonCfg.cs">
+      <Link>Instances\InstanceAddonCfg.cs</Link>
+    </Compile>
+    <Compile Include="..\src\Instances\InstanceAppCfg.cs">
+      <Link>Instances\InstanceAppCfg.cs</Link>
+    </Compile>
+    <Compile Include="..\src\package\packageCfg.cs">
+      <Link>package\packageCfg.cs</Link>
+    </Compile>
+    <Compile Include="..\src\Program.cs">
+      <Link>Program.cs</Link>
+    </Compile>
+    <Compile Include="..\src\Service\PrepSettings.cs">
+      <Link>Service\PrepSettings.cs</Link>
+    </Compile>
+    
   </ItemGroup>
 
 </Project>
