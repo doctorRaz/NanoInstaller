@@ -1,40 +1,44 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>NanoInstaller.NET2._0</RootNamespace>
-  </PropertyGroup>
-<ItemGroup>
-    <Compile Include="..\src\Enum\AppTypeEnum.cs">
-      <Link>Enum\AppTypeEnum.cs</Link>
-    </Compile>
-    <Compile Include="..\src\Ini\ClsINIinterop.cs">
-      <Link>Ini\ClsINIinterop.cs</Link>
-    </Compile>
-    <Compile Include="..\src\Ini\IniClass.cs">
-      <Link>Ini\IniClass.cs</Link>
-    </Compile>
-    <Compile Include="..\src\Ini\NanoInstaller.cs">
-      <Link>Ini\NanoInstaller.cs</Link>
-    </Compile>
-    <Compile Include="..\src\Ini\SetupSettingClass.cs">
-      <Link>Ini\SetupSettingClass.cs</Link>
-    </Compile>
-    <Compile Include="..\src\Instances\InstanceAddonCfg.cs">
-      <Link>Instances\InstanceAddonCfg.cs</Link>
-    </Compile>
-    <Compile Include="..\src\Instances\InstanceAppCfg.cs">
-      <Link>Instances\InstanceAppCfg.cs</Link>
-    </Compile>
-    <Compile Include="..\src\package\packageCfg.cs">
-      <Link>package\packageCfg.cs</Link>
-    </Compile>
-    <Compile Include="..\src\Program.cs">
-      <Link>Program.cs</Link>
-    </Compile>
-    <Compile Include="..\src\Service\PrepSettings.cs">
-      <Link>Service\PrepSettings.cs</Link>
-    </Compile>
-    
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<RootNamespace>NanoInstaller.NET2._0</RootNamespace>
+		<RootNamespace>drz.NanoInstaller</RootNamespace>
+		<BaseOutputPath>..\bin\</BaseOutputPath>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<OutputType>Exe</OutputType>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Include="..\src\Enum\AppTypeEnum.cs">
+			<Link>Enum\AppTypeEnum.cs</Link>
+		</Compile>
+		<Compile Include="..\src\Ini\ClsINIinterop.cs">
+			<Link>Ini\ClsINIinterop.cs</Link>
+		</Compile>
+		<Compile Include="..\src\Ini\IniClass.cs">
+			<Link>Ini\IniClass.cs</Link>
+		</Compile>
+		<Compile Include="..\src\Ini\NanoInstaller.cs">
+			<Link>Ini\NanoInstaller.cs</Link>
+		</Compile>
+		<Compile Include="..\src\Ini\SetupSettingClass.cs">
+			<Link>Ini\SetupSettingClass.cs</Link>
+		</Compile>
+		<Compile Include="..\src\Instances\InstanceAddonCfg.cs">
+			<Link>Instances\InstanceAddonCfg.cs</Link>
+		</Compile>
+		<Compile Include="..\src\Instances\InstanceAppCfg.cs">
+			<Link>Instances\InstanceAppCfg.cs</Link>
+		</Compile>
+		<Compile Include="..\src\package\packageCfg.cs">
+			<Link>package\packageCfg.cs</Link>
+		</Compile>
+		<Compile Include="..\src\Program.cs">
+			<Link>Program.cs</Link>
+		</Compile>
+		<Compile Include="..\src\Service\PrepSettings.cs">
+			<Link>Service\PrepSettings.cs</Link>
+		</Compile>
+
+	</ItemGroup>
 </Project>

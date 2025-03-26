@@ -1,45 +1,54 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <RootNamespace>drz.NanoInstallerFromIni</RootNamespace>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>drz.NanoInstaller</RootNamespace>
+		<BaseOutputPath>..\bin\</BaseOutputPath>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<StartupObject>drz.NanoInstallerFromIni.Program</StartupObject>
+	
+	</PropertyGroup>
 
- <ItemGroup>
-    <Compile Include="..\src\Enum\AppTypeEnum.cs">
-      <Link>Enum\AppTypeEnum.cs</Link>
-    </Compile>
-    <Compile Include="..\src\Ini\ClsINIinterop.cs">
-      <Link>Ini\ClsINIinterop.cs</Link>
-    </Compile>
-    <Compile Include="..\src\Ini\IniClass.cs">
-      <Link>Ini\IniClass.cs</Link>
-    </Compile>
-    <Compile Include="..\src\Ini\NanoInstaller.cs">
-      <Link>Ini\NanoInstaller.cs</Link>
-    </Compile>
-    <Compile Include="..\src\Ini\SetupSettingClass.cs">
-      <Link>Ini\SetupSettingClass.cs</Link>
-    </Compile>
-    <Compile Include="..\src\Instances\InstanceAddonCfg.cs">
-      <Link>Instances\InstanceAddonCfg.cs</Link>
-    </Compile>
-    <Compile Include="..\src\Instances\InstanceAppCfg.cs">
-      <Link>Instances\InstanceAppCfg.cs</Link>
-    </Compile>
-    <Compile Include="..\src\package\packageCfg.cs">
-      <Link>package\packageCfg.cs</Link>
-    </Compile>
-    <Compile Include="..\src\Program.cs">
-      <Link>Program.cs</Link>
-    </Compile>
-    <Compile Include="..\src\Service\PrepSettings.cs">
-      <Link>Service\PrepSettings.cs</Link>
-    </Compile>
-    
-  </ItemGroup>
+ 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<Compile Include="..\src\Enum\AppTypeEnum.cs">
+			<Link>Enum\AppTypeEnum.cs</Link>
+		</Compile>
+		<Compile Include="..\src\Ini\ClsINIinterop.cs">
+			<Link>Ini\ClsINIinterop.cs</Link>
+		</Compile>
+		<Compile Include="..\src\Ini\IniClass.cs">
+			<Link>Ini\IniClass.cs</Link>
+		</Compile>
+		<Compile Include="..\src\Ini\NanoInstaller.cs">
+			<Link>Ini\NanoInstaller.cs</Link>
+		</Compile>
+		<Compile Include="..\src\Ini\SetupSettingClass.cs">
+			<Link>Ini\SetupSettingClass.cs</Link>
+		</Compile>
+		<Compile Include="..\src\Instances\InstanceAddonCfg.cs">
+			<Link>Instances\InstanceAddonCfg.cs</Link>
+		</Compile>
+		<Compile Include="..\src\Instances\InstanceAppCfg.cs">
+			<Link>Instances\InstanceAppCfg.cs</Link>
+		</Compile>
+		<Compile Include="..\src\package\packageCfg.cs">
+			<Link>package\packageCfg.cs</Link>
+		</Compile>
+		<Compile Include="..\src\Program.cs">
+			<Link>Program.cs</Link>
+		</Compile>
+		<Compile Include="..\src\Service\PrepSettings.cs">
+			<Link>Service\PrepSettings.cs</Link>
+		</Compile>
+
+	</ItemGroup>
 
 </Project>
