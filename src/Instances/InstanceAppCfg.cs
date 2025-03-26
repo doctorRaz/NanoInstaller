@@ -87,7 +87,7 @@ namespace drz.NanoInstallerFromIni.Instances
 
                         string AppFulName = ArrApp[ArrApp.Length - 3];//name
 
-                        string[] ArrVersion = AppFulName.Split(" ",StringSplitOptions.RemoveEmptyEntries);
+                        string[] ArrVersion = AppFulName.Split(new string[] { " " } ,StringSplitOptions.RemoveEmptyEntries);
 
                         string Appversion = ArrVersion[ArrVersion.Length - 1];//version
 

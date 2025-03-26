@@ -111,7 +111,7 @@ namespace drz.NanoInstallerFromIni.Ini
             set
             {
                 string[] arName = value.Split('\\');
-                if (arName.Length > 5 && arName[5].Contains("app", StringComparison.InvariantCultureIgnoreCase))
+                if (arName.Length > 5 && arName[5].ToLower(). Contains("app"))
                 {
                     arName[5] = "app";
 
