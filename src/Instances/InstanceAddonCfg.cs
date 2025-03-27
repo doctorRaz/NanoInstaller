@@ -115,13 +115,15 @@ namespace drz.NanoInstallerFromIni.Instances
     {
         internal string Name { get; set; }
 
-        internal bool IsAdd { get; set; }
+        internal bool IsAddonAdd { get; set; }
 
         internal string AddonPath { get; set; }
 
         internal string addonExt { get; set; }
 
         internal AppTypeEnum appTypeEnum { get; set; }
+
+
     }
 
 }

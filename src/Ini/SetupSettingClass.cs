@@ -22,13 +22,13 @@ namespace drz.NanoInstallerFromIni.Ini
 
         internal List<AppSet> AppSets { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is added addon.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is added addon; otherwise, <c>false</c>.
-        /// </value>
-        internal bool IsAdd { get; set; }
+        ///// <summary>
+        ///// Gets or sets a value indicating whether this instance is added addon.
+        ///// </summary>
+        ///// <value>
+        /////   <c>true</c> if this instance is added addon; otherwise, <c>false</c>.
+        ///// </value>
+        //internal bool IsAdd { get; set; }
     }
     internal class AppSet
     {
@@ -53,20 +53,20 @@ namespace drz.NanoInstallerFromIni.Ini
         /// </value>
         internal List<AddonCfg> AddonCfgs { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is added addon.
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is added addon; otherwise, <c>false</c>.
-        /// </value>
-        internal bool IsAdd { get; set; }
+        ///// <summary>
+        ///// Gets or sets a value indicating whether this instance is added addon.
+        ///// </summary>
+        ///// <value>
+        /////   <c>true</c> if this instance is added addon; otherwise, <c>false</c>.
+        ///// </value>
+        //internal bool IsAdd { get; set; }
     }
 
     //internal class AddonCfg
     //{
     //    internal string Name { get; set; }
 
-    //    internal bool IsAdd { get; set; }
+    //    internal bool IsChangeAppCfg { get; set; }
 
     //    internal string AddonPath { get; set; }
 

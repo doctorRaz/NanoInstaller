@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
@@ -15,16 +16,23 @@ using static drz.NanoInstallerFromIni.Instances.InstanceAppCfg;
 
 namespace drz.NanoInstallerFromIni
 {
+    //enum modules
+    //{ 
+    //    SPDS,
+    //    <<Default>>,
+    //    Mech 
+    //}
+
     enum test
     {
 
         None,
-        test,
+        test10,
         ddd
     }
     internal class Program
     {
-
+        [STAThread]
         /// <summary>
         /// отладка
         /// </summary>
@@ -32,53 +40,68 @@ namespace drz.NanoInstallerFromIni
         static void Main(string[] args)
 
         {
+
+            string[] appType = AppTypeEnum.GetNames(typeof(AppTypeEnum));
+
+            var extension = "package";
+            var s1 = ConvertType.AddonType(extension);
+            var ss = appType[(int)s1];
+
+            var s10 = ConvertType.AddonType(extension).ToString();
 #if NET
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 #endif
 
-
-            ClsIni clsIni = new ClsIni(@"d:\@Developers\В работе\!Текущее\Programmers\!NET\NanoInstaller\@res\test.ini");
-            var rr = clsIni.ReadSections();
-
-            clsIni.RemoveSections();
-
-            clsIni.WriteSection("sect10");
-            clsIni.WriteValue("sect100", "key", "val0");
-
-            rr = clsIni.ReadSections();
-
-
             //***
-            bool isAdd = true;//добавлять
+            bool isChangeAppCfg = true;//менять конфиг да нет 
+
+            bool isAddonAdd = true;//добавлять аддон true/ удалять аддон false
+
             bool isDotNet = true;//только для NET
 
-            //получим пути к нано, пофих стоит он или нет, конфиг существует значит ставим или сносим аддон в конфиге, хуже не будет точно
+            //получим пути к нано, конфиг существует значит ставим или сносим аддон в конфиге
             InstanceAppCfg instanseAppCfg = new InstanceAppCfg(isDotNet);
+
+            //GUI запрос к юзеру на какие App наны ставить
+            List<AppCfg> appCfgs = instanseAppCfg.AppCfgs;
+
+            foreach (AppCfg appCfg in appCfgs)
+            {
+                appCfg.IsChangeAppCfg = isChangeAppCfg;//пока так, ставим на все найденные App
+            }
 
             //все аддоны из каталога
             string addonDir = @"d:\@Developers\В работе\!Текущее\Programmers\!NET\!bundle\";
-            InstanceAddonCfg instanseAddonCfg = new InstanceAddonCfg(addonDir, AppTypeEnum.APP_PACKAGE);
 
-            //собираем в кучу список аддонов под конфиги, тут потом должен быть GUI
-            PrepSettings prepSettings = new PrepSettings(instanseAppCfg.AppCfgs, instanseAddonCfg.AddonCfgs, isAdd);
-            SetupSet set = prepSettings.SetupSets;
+            //по хорошему это подготовка, потом писать в класс XML при сборке аддона, при установке читать XML
+            InstanceAddonCfg instanseAddonCfg = new InstanceAddonCfg(addonDir, AppTypeEnum.APP_PACKAGE);
+            List<AddonCfg> addonCfgs = instanseAddonCfg.AddonCfgs;
+
+            foreach (AddonCfg addonCfg in addonCfgs)
+            {
+                addonCfg.IsAddonAdd = isAddonAdd;//пока так, добавляем аддоны
+            }
+
+            //собираем в кучу список аддонов под конфиги
+            PrepSettings prepSettings = new PrepSettings(appCfgs, addonCfgs);
+            SetupSet setupSet = prepSettings.SetupSets;
 
 
             NanoInstaller nanoInstaller = new NanoInstaller(prepSettings.SetupSets);
 
             //test get INI
             nanoInstaller.pathCfg = @"d:\@Developers\В работе\!Текущее\Programmers\!NET\NanoInstaller\@res\cfg.ini";// instanseAppCfg.AppCfgs[0].CfgPath;
-            IniApp getini = nanoInstaller.IniAllModules;
+            IniApp iniApp = nanoInstaller.IniAllModules;
 
 #if DEBUG
+            var modules = iniApp.Modules;
 
-
-            foreach (var mod in getini.Modules)
+            foreach (var mod in modules)
             {
                 int iniSec = 0;
-                string secName = string.Empty;
                 foreach (var sec in mod.Sections)
                 {
+                    string secName = string.Empty;
                     if (sec.IsSectionApp)
                     {
                         secName = sec.Name + iniSec;
@@ -102,11 +125,11 @@ namespace drz.NanoInstallerFromIni
 
             }
 
-            nanoInstaller.IniAllModules = getini;
+            nanoInstaller.IniAllModules = iniApp;
 #endif
             Console.WriteLine("*************************");
 
-
+            Console.ReadKey();
 
             /********************************************************************************************************
             получить  наноконфиги

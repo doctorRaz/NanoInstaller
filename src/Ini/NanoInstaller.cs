@@ -98,6 +98,40 @@ namespace drz.NanoInstallerFromIni.Ini
 
                 int iniSections = 0;
 
+                var modules = _iniAllModules.Modules;
+
+                foreach (var mod in modules)//по модулям
+                {
+                    int iniSec = 0;
+                    foreach (var sec in mod.Sections)//по секциям
+                    {
+                        string secName = string.Empty;
+                        if (sec.IsSectionApp)
+                        {
+                            secName = sec.Name + iniSec;
+                            iniSec++;
+                        }
+                        else
+                        {
+                            secName = sec.RealName;
+                        }
+
+                        Console.WriteLine($"{secName}");
+                        if (sec.Keys.Count > 0)
+                        {
+                            foreach (var key in sec.Keys)//по ключам
+                            {
+                                Console.WriteLine($"{key.KeyName}={key.KeyValue}");
+                            }
+                        }
+
+                    }
+
+                }
+
+
+
+
                 foreach (IniModule mod in _iniAllModules.Modules)
                 {
                     foreach (IniSection sec in mod.Sections)
@@ -182,6 +216,8 @@ namespace drz.NanoInstallerFromIni.Ini
         /// <returns></returns>
         internal bool Install()
         {
+
+            throw new NotImplementedException("Делается");
             bool isOk = true;
 
             foreach (var nano in setset.AppSets)
@@ -190,7 +226,7 @@ namespace drz.NanoInstallerFromIni.Ini
 
                 addonCfgs = nano.AddonCfgs;
 
-                isAdd = nano.IsAdd;
+                //isAdd = nano.IsAdd;
 
                 //? if (!GetIni()) isOk = false;//если хоть один сбой то не ОК
             }

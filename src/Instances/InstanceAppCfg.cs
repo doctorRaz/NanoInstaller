@@ -11,41 +11,44 @@ using drz.NanoInstallerFromIni.Ini;
 
 namespace drz.NanoInstallerFromIni.Instances
 {
+
+    /// <summary>
+    /// конфигурации нано версий
+    /// </summary>
+    internal class AppCfg
+    {
+        /// <summary>
+        /// Gets or sets the CFG App path.
+        /// </summary>
+        /// <value>
+        /// The CFG path.
+        /// </value>
+        public string CfgPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the App CFG.
+        /// </summary>
+        /// <value>
+        /// The name of the CFG.
+        /// </value>
+        public string CfgName { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is add.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> менять конфигурацию приложения; не менять, <c>false</c>.
+        /// </value>
+        public bool IsChangeAppCfg { get; set; }
+
+    }
+
     /// <summary>
     /// все про нано
     /// </summary>
     internal class InstanceAppCfg
     {
-        /// <summary>
-        /// конфигурации нано версий
-        /// </summary>
-        internal class AppCfg
-        {
-            /// <summary>
-            /// Gets or sets the CFG App path.
-            /// </summary>
-            /// <value>
-            /// The CFG path.
-            /// </value>
-            public string CfgPath { get; set; }
-
-            /// <summary>
-            /// Gets or sets the name of the App CFG.
-            /// </summary>
-            /// <value>
-            /// The name of the CFG.
-            /// </value>
-            public string CfgName { get; set; }
-
-            /// <summary>
-            /// Gets or sets a value indicating whether this instance is add.
-            /// </summary>
-            /// <value>
-            ///   <c>true</c> менять конфигурацию приложения; не менять, <c>false</c>.
-            /// </value>
-            public bool IsAdd{ get; set; }
-
-        }
 
         /// <summary>
         /// имя конфига, прибито наногвоздями
@@ -61,6 +64,8 @@ namespace drz.NanoInstallerFromIni.Instances
         bool isDotNet { get; set; }
 
 
+        //internal bool IsChangeAppCfg{ get; set; }
+
         List<AppCfg> _nanoCfgPaths;
         /// <summary>
         /// пути к конфигам нано (не проверяем установлен или нет)
@@ -68,7 +73,7 @@ namespace drz.NanoInstallerFromIni.Instances
         /// <value>
         /// The nano CFG paths.
         /// </value>
-        internal List<AppCfg> AppCfgs  
+        internal List<AppCfg> AppCfgs
         {
             get
             {
@@ -87,7 +92,7 @@ namespace drz.NanoInstallerFromIni.Instances
 
                         string AppFulName = ArrApp[ArrApp.Length - 3];//name
 
-                        string[] ArrVersion = AppFulName.Split(new string[] { " " } ,StringSplitOptions.RemoveEmptyEntries);
+                        string[] ArrVersion = AppFulName.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
 
                         string Appversion = ArrVersion[ArrVersion.Length - 1];//version
 
@@ -110,7 +115,6 @@ namespace drz.NanoInstallerFromIni.Instances
                         AppCfg nanoCfgPath = new AppCfg();
                         nanoCfgPath.CfgPath = fulFileNameCfg;
                         nanoCfgPath.CfgName = AppFulName;
-
                         _nanoCfgPaths.Add(nanoCfgPath);
                     }
 
@@ -147,5 +151,5 @@ namespace drz.NanoInstallerFromIni.Instances
 
         }
     }
-     
+
 }
